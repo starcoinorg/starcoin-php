@@ -3,17 +3,33 @@
 namespace Starcoin\Transport;
 class WsTransport implements TransportInterface
 {
-    public function __construct()
+
+    private $client;
+    private $requestId = 0;
+
+
+    public function __construct($address)
     {
+        $this->client = new \WebSocket\Client($address);
     }
 
     function call($method, $params)
     {
-        // TODO: Implement call() method.
+        $query = [
+            "id" => $this->requestId++,
+            "jsonrpc" => "2.0",
+            "method" => $method,
+            "params" => $params
+        ];
+
+        $this->client->text(json_encode($query));
+
+        $resp = $this->client->receive();
+        return json_decode($resp, true);
     }
 
     function close()
     {
-        // TODO: Implement close() method.
+        $this->client->close();
     }
 }

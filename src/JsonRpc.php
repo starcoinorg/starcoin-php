@@ -10,8 +10,6 @@ class JsonRpc
 
     public function __construct($address)
     {
-        $this->$address = $address;
-
         $this->rpc = new Transport($address);
     }
 

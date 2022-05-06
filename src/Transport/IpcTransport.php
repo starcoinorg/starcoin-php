@@ -1,7 +1,7 @@
 <?php
 
 namespace Starcoin\Transport;
-abstract class IpcTransport implements TransportInterface
+class IpcTransport implements TransportInterface
 {
 
     public function __construct()

@@ -92,7 +92,7 @@ class StarcoinClient
 
     public function getBalanceOfStc($address)
     {
-       $res =   $this->listResource($address);
+        $res = $this->listResource($address);
     }
 
 

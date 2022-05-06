@@ -1,6 +1,9 @@
 <?php
 
 namespace Starcoin\Transport;
+
+use Starcoin\Tool;
+
 class Transport implements TransportInterface
 {
 
@@ -8,7 +11,16 @@ class Transport implements TransportInterface
 
     public function __construct($address)
     {
-        $this->transport = new HttpTransport($address);
+
+        if (Tool::isWebsocket($address)) {
+            $this->transport = new WsTransport($address);
+        } elseif (Tool::isHttp($address)) {
+            $this->transport = new HttpTransport($address);
+        } elseif (Tool::isIpc($address)) {
+            // TODO
+            $this->transport = new IpcTransport($address);
+        }
+
     }
 
 
