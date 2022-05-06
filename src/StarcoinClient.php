@@ -90,13 +90,13 @@ class StarcoinClient
 
     }
 
-    public function getBalanceOfStc($address)
+    public function getBalanceOfStc(string $address)
     {
         $res = $this->listResource($address);
     }
 
 
-    public function listResource($address)
+    public function listResource(string $address)
     {
         return $this->rpc->call("state.list_resource", [$address]);
     }
@@ -121,8 +121,9 @@ class StarcoinClient
 
     }
 
-    public function getState()
+    public function getState(string $address)
     {
+       $result = $this->rpc->call("state.get",$address."/1/0x00000000000000000000000000000001::Account::Account");
 
     }
 
@@ -175,12 +176,12 @@ class StarcoinClient
 
     public function getGasUnitPrice()
     {
-
+       return $this->rpc->call("txpool.gas_price");
     }
 
-    public function CallContract()
+    public function callContract($call)
     {
-
+        return $this->rpc->call("contract.call_v2",$call);
     }
 
     public function EstimateGasByDryRunRaw()
