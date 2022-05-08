@@ -13,7 +13,7 @@ class WsTransport implements TransportInterface
         $this->client = new \WebSocket\Client($address);
     }
 
-    function call($method, $params)
+    function call(string $method, $params)
     {
         $query = [
             "id" => $this->requestId++,

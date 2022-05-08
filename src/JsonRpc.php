@@ -6,14 +6,14 @@ use Starcoin\Transport\Transport;
 
 class JsonRpc
 {
-    private $rpc;
+    private Transport $rpc;
 
-    public function __construct($address)
+    public function __construct(string $address)
     {
         $this->rpc = new Transport($address);
     }
 
-    public function call($method, $params = [])
+    public function call(string $method, $params = [])
     {
         return $this->rpc->call($method, $params);
     }

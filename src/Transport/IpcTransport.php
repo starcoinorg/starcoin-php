@@ -8,7 +8,7 @@ class IpcTransport implements TransportInterface
     {
     }
 
-    function call($method, $params)
+    function call(string $method, $params)
     {
         // TODO: Implement call() method.
     }

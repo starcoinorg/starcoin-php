@@ -3,13 +3,14 @@
 namespace Starcoin\Transport;
 
 use Starcoin\Tool;
+use Starcoin\type\ParamInterface;
 
 class Transport implements TransportInterface
 {
 
-    private $transport;
+    private TransportInterface $transport;
 
-    public function __construct($address)
+    public function __construct(string $address)
     {
 
         if (Tool::isWebsocket($address)) {
@@ -24,8 +25,11 @@ class Transport implements TransportInterface
     }
 
 
-    function call($method, $params)
+    function call(string $method, $params)
     {
+        if ($params instanceof ParamInterface) {
+            $params = $params->toArray();
+        }
         return $this->transport->call($method, $params);
     }
 
