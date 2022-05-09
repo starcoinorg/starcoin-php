@@ -3,7 +3,6 @@
 namespace Starcoin\Transport;
 interface TransportInterface
 {
-    function call($method, $params);
-
+    function call(string $method, $params);
     function close();
 }

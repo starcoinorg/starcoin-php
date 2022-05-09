@@ -1,22 +1,29 @@
 <?php
 
 namespace Starcoin\Transport;
+
+use Starcoin\Exception\JsonRpcException;
+
 class HttpTransport implements TransportInterface
 {
 
-    private $client;
-    private $address;
+    private \GuzzleHttp\Client $client;
+    private string $address;
 
-    public function __construct($address)
+    public function __construct(string $address)
     {
         $this->client = new \GuzzleHttp\Client();
         $this->address = $address;
     }
 
-    function call($method, $params)
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws JsonRpcException
+     */
+    function call(string $method, $params)
     {
         $query = [
-            "id" => "",
+            "id" => 1,
             "jsonrpc" => "2.0",
             "method" => $method,
             "params" => $params
@@ -28,7 +35,12 @@ class HttpTransport implements TransportInterface
         ]);
 
 
-        return json_decode($r->getBody()->getContents(), true);
+        $array = json_decode($r->getBody()->getContents(), true);
+        if ($array && isset($array["error"])) {
+            throw new JsonRpcException($array["error"]['message'], $array["error"]['code']);
+        }
+
+        return $array["result"];
     }
 
     function close()

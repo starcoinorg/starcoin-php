@@ -1,14 +1,14 @@
 <?php
 
 namespace Starcoin\Transport;
-abstract class IpcTransport implements TransportInterface
+class IpcTransport implements TransportInterface
 {
 
     public function __construct()
     {
     }
 
-    function call($method, $params)
+    function call(string $method, $params)
     {
         // TODO: Implement call() method.
     }
